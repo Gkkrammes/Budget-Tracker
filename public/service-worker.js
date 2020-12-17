@@ -8,8 +8,8 @@ const FILES_TO_CACHE = [
     '/icons/icon-512x512.png',
   ];
   
-  const CACHE_NAME = "static-cache-v2"; // saves html, css, js, images
-  const DATA_CACHE_NAME = "data-cache-v1"; // saves json and data from api requests 
+  const CACHE_NAME = "static-cache-v2"; 
+  const DATA_CACHE_NAME = "data-cache-v1"; 
   
 
   self.addEventListener("install", function(evt) {
@@ -39,3 +39,34 @@ const FILES_TO_CACHE = [
   
     self.clients.claim();
   });
+
+   self.addEventListener("fetch", function(evt) {
+    if (evt.request.url.includes("/api/")) { // api returns json 
+      evt.respondWith(
+        caches.open(DATA_CACHE_NAME).then(cache => {
+          return fetch(evt.request)
+            .then(response => {             
+              if (response.status === 200) {
+                cache.put(evt.request.url, response.clone());
+              }
+  
+              return response;
+            })
+            .catch(err => {
+              return cache.match(evt.request);
+            });
+        }).catch(err => console.log(err))
+      );
+  
+      return;
+    }
+  
+    evt.respondWith(
+      caches.open(CACHE_NAME).then(cache => {
+        return cache.match(evt.request).then(response => {
+          return response || fetch(evt.request);
+        });
+      })
+    );
+  });
+  
