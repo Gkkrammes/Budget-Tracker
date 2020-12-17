@@ -7,7 +7,6 @@ fetch("/api/transaction")
   })
   .then(data => {
     transactions = data;
-
     populateTotal();
     populateTable();
     populateChart();
