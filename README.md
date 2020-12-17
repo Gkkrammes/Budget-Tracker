@@ -1,6 +1,10 @@
 # Budget Tracker 
   # https://github.com/Gkkrammes/Budget-Tracker
   
+  ## Link to video of functioning app
+  ## https://drive.google.com/file/d/1u9QNymACwaJDBbv4ujY7ikh3X4Yo-gTq/view
+  -Please note the app is not functioning properly on deployed site. Unexpected errors after deployment.
+  
   ## Link to deployed site
   ## https://still-headland-96179.herokuapp.com/
   
